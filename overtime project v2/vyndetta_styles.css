@@ -26,14 +26,6 @@
     justify-content: center;
 }
 
-@media (max-width: 768px) {
-    #canvas-container {
-        /* On mobile, use a smaller gap so the object isn't pushed off-screen */
-        top: 25rem;
-    }
-}
-
-
 html {
     font-size: 62.5%;
     overflow-x: hidden;
