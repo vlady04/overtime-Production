@@ -47,6 +47,8 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
+// to increase quality on mobile screens
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // 1. EXPOSURE (BRIGHTNESS)
 // Higher number = Brighter Camera
@@ -193,20 +195,30 @@ animate();
 // RESIZE LOGIC (Responsive Size)
 // =========================================
 
-function resizeModel() {
-  // 1. Update Camera/Renderer
+let lastWidth = 0;
+
+function resizeModel(forceUpdate = false) {
+  const currentWidth = window.innerWidth;
+
+  // CHECK: If width hasn't changed (and it's not a forced update), STOP.
+  // This prevents the "Jump" on mobile scrolling.
+  if (!forceUpdate && currentWidth === lastWidth && currentWidth < 900) {
+    return;
+  }
+
+  lastWidth = currentWidth;
+
+  // Standard Resize
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // 2. Update Object Size (Responsive Scaling)
-  const width = window.innerWidth;
-
-  if (width < 600) {
+  if (currentWidth < 600) {
     // MOBILE TARGETS
     targetGroupScale.set(0.6, 0.6, 0.6);
     targetGroupPosition.set(0, 0, 0);
-  } else if (width < 1000) {
+  } else if (currentWidth < 1000) {
     // TABLET TARGETS
     targetGroupScale.set(0.8, 0.8, 0.8);
     targetGroupPosition.set(0, 0, 0);
@@ -218,7 +230,7 @@ function resizeModel() {
 }
 
 // Attach listener
-window.addEventListener('resize', resizeModel);
+window.addEventListener('resize', () => resizeModel(false));
 
 
 // =========================================
