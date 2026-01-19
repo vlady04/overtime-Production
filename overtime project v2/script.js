@@ -9,9 +9,9 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 const startGap = 1.4;
 
 // --- SIZE SETTINGS ---
-const targetHeight = 1.0;
-const widthScale = 0.15;
-const depthScale = 0.5;
+const targetHeight = 0.5;
+const widthScale = 0.06;
+const depthScale = 1.0;
 
 // --- SHINY METAL LOOK ---
 // I made the red slightly lighter so it reflects more light
