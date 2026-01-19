@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-transform: capitalize;
+    transition: all .2s linear;
+}
+
+/* 3D CANVAS STYLING */
+#canvas-container {
+    position: fixed;
+    /* Keeps it locked to the screen while you scroll */
+    top: 25rem;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    /* High number puts it ON TOP of everything */
+    pointer-events: none;
+    /* CRITICAL: Lets clicks pass through to the links below */
+
+}
+
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #0a0a0a;
+    color: #fff;
+}
+
+section {
+    padding: 2rem 9%;
+}
+
+.heading {
+    text-align: center;
+    font-size: 4rem;
+    color: #fff;
+    padding: 1rem;
+    margin: 2rem 0;
+    text-transform: uppercase;
+}
+
+.heading span {
+    color: #e74c3c;
+}
+
+/* Header Styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 2rem 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 .5rem 1rem rgba(231, 76, 60, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+header .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+header #toggler {
+    display: none;
+}
+
+header .fa-bars {
+    font-size: 3rem;
+    color: #f7f4f4;
+    border-radius: .5rem;
+    padding: .5rem 1.5rem;
+    cursor: pointer;
+    border: .1rem solid rgba(0, 0, 0, .3);
+    display: none;
+}
+
+header .logo {
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+
+header .logo span {
+    color: #9a2a1d;
+}
+
+header .navbar a {
+    font-size: 1.7rem;
+    margin-left: 2rem;
+    color: #fff;
+    text-decoration: none;
+    transition: color .3s;
+}
+
+header .navbar a:hover {
+    color: #9a2a1d
+}
+
+header input,
+header label {
+    display: none;
+}
+
+/* Home Section */
+.home-container {
+    margin-top: 8rem;
+}
+
+.home {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(231, 76, 60, 0.1) 0%, transparent 70%);
+}
+
+.home .content {
+    text-align: center;
+    z-index: 1;
+}
+
+.home .content h3 {
+    font-size: 6rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.3rem;
+    text-shadow: 0 0 2rem rgba(231, 76, 60, 0.5);
+}
+
+.home-intro {
+    margin-top: 3rem;
+}
+
+.home-intro img {
+    max-width: 50rem;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 3rem rgba(231, 76, 60, 0.6));
+}
+
+/* About/Media Section */
+.about {
+    background: #0f0f0f;
+    padding: 5rem 9%;
+}
+
+.about .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about .video-container {
+    width: 100%;
+    max-width: 120rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 1rem 3rem rgba(231, 76, 60, 0.3);
+}
+
+.about .video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Products Section */
+.products {
+    background: #0a0a0a;
+    padding: 5rem 9%;
+}
+
+.products .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.products .box {
+    position: relative;
+    background: #1a1a1a;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+    transition: transform .3s, box-shadow .3s;
+}
+
+.products .box:hover {
+    transform: translateY(-1rem);
+    box-shadow: 0 1.5rem 3rem rgba(231, 76, 60, 0.4);
+}
+
+.products .box .discount {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: red;
+    color: #fff;
+    padding: .5rem 1rem;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+    z-index: 1;
+    font-weight: 600;
+}
+
+.products .box .image {
+    height: 35rem;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.products .box .image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.products .box .image .icons {
+    position: absolute;
+    bottom: -10rem;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: bottom .3s;
+}
+
+.products .box:hover .image .icons {
+    bottom: 0;
+}
+
+.products .box .image .icons a {
+    height: 4.5rem;
+    width: 4.5rem;
+    line-height: 4.5rem;
+    font-size: 1.7rem;
+    color: #fff;
+    background: red;
+    text-align: center;
+    border-radius: .5rem;
+    text-decoration: none;
+    transition: background .3s;
+}
+
+.products .box .image .icons a:hover {
+    background: #711a11;
+}
+
+.products .box .image .icons .cart-btn {
+    width: auto;
+    padding: 0 2rem;
+    font-size: 1.4rem;
+}
+
+.products .box .content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.products .box .content h3 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.products .box .content .price {
+    font-size: 2rem;
+    color: red;
+    font-weight: 600;
+}
+
+.products .box .content .price span {
+    font-size: 1.5rem;
+    color: #999;
+    text-decoration: line-through;
+    margin-left: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    html {
+        font-size: 55%;
+    }
+
+    header {
+        padding: 2rem;
+    }
+
+    section {
+        padding: 2rem;
+    }
+
+    .home .content h3 {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header input:checked~.navbar {
+        left: 0;
+    }
+
+    header .fa-bars {
+        display: block;
+    }
+
+    header input:checked~label::before {
+        content: '\f00d';
+    }
+
+    header label {
+        display: block;
+        font-size: 2.5rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    header .navbar {
+        position: fixed;
+        top: 8rem;
+        left: -120%;
+        background: rgba(0, 0, 0, 0.98);
+        width: 100%;
+        height: calc(100vh - 8rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 5rem;
+        transition: left .3s;
+    }
+
+    header .navbar a {
+        margin: 1.5rem 0;
+        font-size: 2.5rem;
+        display: block;
+    }
+
+    .home .content h3 {
+        font-size: 3rem;
+    }
+
+    .products .box-container {
+        grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    }
+}
+
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+
+    .heading {
+        font-size: 3rem;
+    }
+
+    .home .content h3 {
+        font-size: 2.5rem;
+    }
+}
