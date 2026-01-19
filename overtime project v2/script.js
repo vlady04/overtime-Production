@@ -36,6 +36,11 @@ const scene = new THREE.Scene();
 const mainGroup = new THREE.Group();
 scene.add(mainGroup);
 
+// --- SMOOTH TRANSITION VARIABLES ---
+// We use these to store where we WANT the object to be
+let targetGroupScale = new THREE.Vector3(1, 1, 1);
+let targetGroupPosition = new THREE.Vector3(0, 0, 0);
+
 // scene.background = new THREE.Color(0x050505); // Very dark grey background
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -172,12 +177,13 @@ function animate() {
   currentRotation += (targetRotation - currentRotation) * 0.05;
 
   // Note: We apply rotation to the child objects inside the group 
-  // to keep your original spinning logic
+
   mainGroup.children.forEach(child => {
     child.rotation.x = startX + currentRotation;
   });
 
-
+  mainGroup.scale.lerp(targetGroupScale, 0.1);
+  mainGroup.position.lerp(targetGroupPosition, 0.1);
 
   renderer.render(scene, camera);
 }
@@ -197,19 +203,17 @@ function resizeModel() {
   const width = window.innerWidth;
 
   if (width < 600) {
-    // MOBILE: Scale down to 60%
-    mainGroup.scale.set(0.6, 0.6, 0.6);
-
-    // Optional: Move it up slightly if it overlaps text on mobile
-    mainGroup.position.y = 0;
+    // MOBILE TARGETS
+    targetGroupScale.set(0.6, 0.6, 0.6);
+    targetGroupPosition.set(0, 0, 0);
   } else if (width < 1000) {
-    // TABLET: Scale down to 80%
-    mainGroup.scale.set(0.8, 0.8, 0.8);
-
+    // TABLET TARGETS
+    targetGroupScale.set(0.8, 0.8, 0.8);
+    targetGroupPosition.set(0, 0, 0);
   } else {
-    // DESKTOP: Full size
-    mainGroup.scale.set(1.5, 1.5, 1.5);
-
+    // DESKTOP TARGETS
+    targetGroupScale.set(1, 1, 1);
+    targetGroupPosition.set(0, 0, 0);
   }
 }
 
