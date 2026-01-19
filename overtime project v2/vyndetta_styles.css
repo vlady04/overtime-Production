@@ -30,7 +30,6 @@
     #canvas-container {
         /* On mobile, use a smaller gap so the object isn't pushed off-screen */
         top: 25rem;
-        /* Approx 150px */
     }
 }
 
