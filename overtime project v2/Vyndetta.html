@@ -16,49 +16,54 @@
 </head>
 
 <body>
+    <div id="canvas-container"></div>
     <!-- header section starts  -->
 
     <header>
-
+    
         <section class="flex">
-
+    
             <input type="checkbox" name="" id="toggler">
             <label for="toggler" class="fas fa-bars"></label>
-
+    
             <a href="#" class="logo">vyndetta<span>.</span></a>
-
+    
             <nav class="navbar">
-                <a href="#home">home</a>
+                <a href="#">home</a> <!-- changed to # so it goes all the way up  -->
                 <a href="#products">shop</a>
-                <a href="#review">Gallery</a>
-                <a href="#review">Cart</a>
+                <a href="#review">Media</a>
             </nav>
-
-
-
+    
+    
+    
         </section>
-
+    
     </header>
 
     <!-- header section ends -->
-    <!-- home section starts  -->
-
-
-    <div class="home-container">
-
-
-        <section class="home" id="home">
-            <div class="content">
-                <h3>Control over chaos</h3>
-            </div>
-            <!--image here-->
-            <div class="home-intro">
-                <img src="" alt="fat hoe">
-            </div>
-        </section>
-
-    </div>
-    <!-- home section ends -->
+        <!-- home section starts  -->
+        
+        
+        <div class="home-container">
+        
+        
+            <section class="home" id="home">
+                <div class="content">
+                    <h3>Control</h3>
+                </div>
+        
+                <!--image here-->
+        
+                <div class="content">
+                    <h3>Chaos</h3>
+                </div>
+                <div class="home-intro">
+                    <img src="" alt="fat hoe">
+                </div>
+            </section>
+        
+        </div>
+        <!-- home section ends -->
     <!--media goes here -->
     <section class="about" id="about">
         <div class="row">
@@ -421,7 +426,17 @@
         </div>
     </section>
 
+    <script type="importmap">
+                      {
+                          "imports": {
+                              "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                              "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+                          }
+                      }
+                  </script>
+    <script type="module" src="3d_animation.js"></script>
     <script src="script.js"></script>
+    
 </body>
 
 </html>
