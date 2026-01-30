@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vyndetta</title>
+    <title>VYNDETTA: Refined Streetwear | VYNDETTA</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -16,7 +16,6 @@
 </head>
 
 <body>
-    <div id="canvas-container"></div>
     <!-- header section starts  -->
 
     <header>
@@ -29,9 +28,10 @@
             <a href="#" class="logo">vyndetta<span>.</span></a>
 
             <nav class="navbar">
-                <a href="#">home</a> <!-- changed to # so it goes all the way up  -->
+                <a href="#home">home</a>
                 <a href="#products">shop</a>
-                <a href="#review">Media</a>
+                <a href="#review">Gallery</a>
+                <a href="#review">Cart</a>
             </nav>
 
 
@@ -40,142 +40,394 @@
 
     </header>
 
-    <div id="page-wrapper">
-
-        <!-- header section ends -->
-        <!-- home section starts  -->
+    <!-- header section ends -->
+    <!-- home section starts  -->
 
 
-        <div class="home-container">
+    <div class="home-container">
 
 
-            <section class="home" id="home">
-                <div class="content">
-                    <h3>Control</h3>
-                </div>
-                
-                <!--image here-->
-
-                <div class="content">
-                    <h3>Chaos</h3>
-                </div>
-                <div class="home-intro">
-                    <img src="" alt="fat hoe">
-                </div>
-            </section>
-
-        </div>
-        <!-- home section ends -->
-        <!--media goes here -->
-        <section class="about" id="about">
-            <div class="row">
-
-                <div class="video-container">
-                    <video src="images/about-vid.mp4" loop autoplay muted></video>
-
-                </div>
-
+        <section class="home" id="home">
+            <div class="content">
+                <h3>Control over chaos</h3>
             </div>
-
-        </section>
-        <!--media ends here-->
-
-
-
-
-        <!-- prodcuts section starts  -->
-
-        <section class="products" id="products">
-
-            <h1 class="heading"> latest <span>products</span> </h1>
-
-            <div class="box-container">
-
-                <div class="box">
-
-                    <div class="image">
-                        <img src="images/img-1.jpg" alt="">
-                        <div class="icons">
-                            <a href="#" class="fas fa-comment"></a>
-                            <a href="#" class="cart-btn">add to cart</a>
-                            <a href="#" class="fas fa-share"></a>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <h3>Product</h3>
-                        <div class="price"> $12.99 <span>$15.99</span> </div>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <span class="discount">-15%</span>
-                    <div class="image">
-                        <img src="images/img-2.jpg" alt="">
-                        <div class="icons">
-                            <a href="#" class="fas fa-comment"></a>
-                            <a href="#" class="cart-btn">add to cart</a>
-                            <a href="#" class="fas fa-share"></a>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <h3>Product</h3>
-                        <div class="price"> $12.99 <span>$15.99</span> </div>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <span class="discount">-5%</span>
-                    <div class="image">
-                        <img src="images/img-3.jpg" alt="">
-                        <div class="icons">
-                            <a href="#" class="fas fa-comment"></a>
-                            <a href="#" class="cart-btn">add to cart</a>
-                            <a href="#" class="fas fa-share"></a>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <h3>Product</h3>
-                        <div class="price"> $12.99 <span>$15.99</span> </div>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <span class="discount">-20%</span>
-                    <div class="image">
-                        <img src="images/img-4.jpg" alt="">
-                        <div class="icons">
-                            <a href="#" class="fas fa-comment"></a>
-                            <a href="#" class="cart-btn">add to cart</a>
-                            <a href="#" class="fas fa-share"></a>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <h3>Product</h3>
-                        <div class="price"> $12.99 <span>$15.99</span> </div>
-                    </div>
-                </div>
+            <!--image here-->
+            <div class="home-intro">
+                <img src="" alt="fat hoe">
             </div>
         </section>
 
     </div>
+    <!-- home section ends -->
+    <!--media goes here -->
+    <section class="about" id="about">
+        <div class="row">
 
-    <script type="importmap">
-                  {
-                      "imports": {
-                          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-                      }
-                  }
-              </script>
+            <div class="video-container">
+                <video src="images/about-vid.mp4" loop autoplay muted></video>
 
-    <script type="module" src="script.js"></script>
-</body>
+            </div>
 
-</html>
+        </div>
+
+    </section>
+    <!--media ends here-->
+
+    <!--Gallery section start here-->
+    <!--NOTES: if you want to change the videos change the link before "?auto" and change playlist=Y2GuF9gSIPs for the code after /embede/ in your new link-->
+
+    <section class="video-gallery">
+        <div class="gallery-container">
+            <h2>Promorable Videos</h2>
+            <div class="video-grid">
+                <div class="video-wrapper">
+                    <iframe width="640" height="360"
+                        src="https://www.youtube.com/embed/Y2GuF9gSIPs?autoplay=1&mute=1&controls=0&loop=1&playlist=Y2GuF9gSIPs&playsinline=1"
+                        title="TATTUKKA Clothing Brand" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe width="640" height="360"
+                        src="https://www.youtube.com/embed/K4TOrB7at0Y?autoplay=1&mute=1&controls=0&loop=1&playlist=K4TOrB7at0Y"
+                        title="Demo Background Sample Video" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe width="587" height="1044"
+                        src="https://www.youtube.com/embed/j9mGhIGLVLU?autoplay=1&mute=1&controls=0&loop=1&playlist=j9mGhIGLVLU"
+                        title="Clothes T shirt 3D CGI video ad" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+                <div class="video-wrapper">
+                    <iframe width="587" height="1044"
+                        src="https://www.youtube.com/embed/j9mGhIGLVLU?autoplay=1&mute=1&controls=0&loop=1&playlist=j9mGhIGLVLU"
+                        title="Clothes T shirt 3D CGI video ad" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 
 
+
+
+
+    <!--Gallery section ends here-->
+
+
+
+    <!-- prodcuts section starts  -->
+
+    <section class="products" id="products">
+
+        <h1 class="heading"> latest <span>products</span> </h1>
+
+        <div class="container">
+
+
+            <main>
+                <div class="product-grid">
+                    <!-- Product Card 1 -->
+                    <div class="card-gallery">
+                        <a href="#" class="product-link" onclick="return false;"
+                            aria-label="View Sharon [Halle Berry] Stone">
+                            <div class="slideshow-component">
+                                <div class="slideshow-slides" data-current-slide="0">
+                                    <div class="slideshow-slide" style="transform: translateX(0%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=800&fit=crop&q=80"
+                                                alt="Sharon [Halle Berry] Stone" loading="lazy">
+                                        </div>
+                                    </div>
+                                    <div class="slideshow-slide" style="transform: translateX(100%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1614963326505-843868e1d45a?w=600&h=800&fit=crop&q=80"
+                                                alt="Sharon [Halle Berry] Stone" loading="lazy">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slideshow-navigation">
+                                    <button class="slideshow-dot active" data-slide="0"
+                                        aria-label="Go to image 1"></button>
+                                    <button class="slideshow-dot" data-slide="1" aria-label="Go to image 2"></button>
+                                </div>
+                            </div>
+                            <div class="product-info-overlay">
+                                <h3 class="product-title">Sharon [Halle Berry] Stone</h3>
+                                <p class="product-price">$9.00 USD</p>
+                            </div>
+                        </a>
+                        <div class="quick-add">
+                            <button class="like-button" data-product-id="1"
+                                aria-label="Like Sharon [Halle Berry] Stone">
+                                <span class="like-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <span class="like-counter">0</span>
+                            </button>
+                            <button class="quick-add__button" data-product-id="1"
+                                data-product-title="Sharon [Halle Berry] Stone" data-product-price="9.00"
+                                aria-label="Add Sharon [Halle Berry] Stone to cart">
+                                <span class="add-to-cart-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="var(--icon-stroke-width)"
+                                            d="M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3">
+                                        </path>
+                                        <path stroke="currentColor" stroke-linecap="round"
+                                            stroke-width="var(--icon-stroke-width)" d="M14.608 12.563v5m2.5-2.5h-5">
+                                        </path>
+                                    </svg>
+                                    <svg class="checkmark-burst" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle class="ring" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="1.5"></circle>
+                                        <path class="tick" d="M9 12.75L11.25 15L15 9.75" stroke="currentColor"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </span>
+                                <span class="add-to-cart-text">Add</span>
+                            </button>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Sharon [Halle Berry] Stone</h3>
+                            <p class="product-price">$9.00 USD</p>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="card-gallery">
+                        <a href="#" class="product-link" onclick="return false;" aria-label="View Dexter's Hot Mom">
+                            <div class="slideshow-component">
+                                <div class="slideshow-slides" data-current-slide="0">
+                                    <div class="slideshow-slide" style="transform: translateX(0%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=800&fit=crop&q=80"
+                                                alt="Dexter's Hot Mom" loading="lazy">
+                                        </div>
+                                    </div>
+                                    <div class="slideshow-slide" style="transform: translateX(100%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=800&fit=crop&q=80"
+                                                alt="Dexter's Hot Mom" loading="lazy">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slideshow-navigation">
+                                    <button class="slideshow-dot active" data-slide="0"
+                                        aria-label="Go to image 1"></button>
+                                    <button class="slideshow-dot" data-slide="1" aria-label="Go to image 2"></button>
+                                </div>
+                            </div>
+                            <div class="product-info-overlay">
+                                <h3 class="product-title">Dexter's Hot Mom</h3>
+                                <p class="product-price">$9.00 USD</p>
+                            </div>
+                        </a>
+                        <div class="quick-add">
+                            <button class="like-button" data-product-id="2" aria-label="Like Dexter's Hot Mom">
+                                <span class="like-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <span class="like-counter">0</span>
+                            </button>
+                            <button class="quick-add__button" data-product-id="2" data-product-title="Dexter's Hot Mom"
+                                data-product-price="9.00" aria-label="Add Dexter's Hot Mom to cart">
+                                <span class="add-to-cart-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="var(--icon-stroke-width)"
+                                            d="M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3">
+                                        </path>
+                                        <path stroke="currentColor" stroke-linecap="round"
+                                            stroke-width="var(--icon-stroke-width)" d="M14.608 12.563v5m2.5-2.5h-5">
+                                        </path>
+                                    </svg>
+                                    <svg class="checkmark-burst" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle class="ring" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="1.5"></circle>
+                                        <path class="tick" d="M9 12.75L11.25 15L15 9.75" stroke="currentColor"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </span>
+                                <span class="add-to-cart-text">Add</span>
+                            </button>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Dexter's Hot Mom</h3>
+                            <p class="product-price">$9.00 USD</p>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="card-gallery">
+                        <a href="#" class="product-link" onclick="return false;"
+                            aria-label="View Yours Cruelly, ELVIRA">
+                            <div class="slideshow-component">
+                                <div class="slideshow-slides" data-current-slide="0">
+                                    <div class="slideshow-slide" style="transform: translateX(0%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1563788835831-8cf95c3c1cff?w=600&h=800&fit=crop&q=80"
+                                                alt="Yours Cruelly, ELVIRA" loading="lazy">
+                                        </div>
+                                    </div>
+                                    <div class="slideshow-slide" style="transform: translateX(100%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=800&fit=crop&q=80"
+                                                alt="Yours Cruelly, ELVIRA" loading="lazy">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slideshow-navigation">
+                                    <button class="slideshow-dot active" data-slide="0"
+                                        aria-label="Go to image 1"></button>
+                                    <button class="slideshow-dot" data-slide="1" aria-label="Go to image 2"></button>
+                                </div>
+                            </div>
+                            <div class="product-info-overlay">
+                                <h3 class="product-title">Yours Cruelly, ELVIRA</h3>
+                                <p class="product-price">$9.00 USD</p>
+                            </div>
+                        </a>
+                        <div class="quick-add">
+                            <button class="like-button" data-product-id="3" aria-label="Like Yours Cruelly, ELVIRA">
+                                <span class="like-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <span class="like-counter">0</span>
+                            </button>
+                            <button class="quick-add__button" data-product-id="3"
+                                data-product-title="Yours Cruelly, ELVIRA" data-product-price="9.00"
+                                aria-label="Add Yours Cruelly, ELVIRA to cart">
+                                <span class="add-to-cart-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="var(--icon-stroke-width)"
+                                            d="M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3">
+                                        </path>
+                                        <path stroke="currentColor" stroke-linecap="round"
+                                            stroke-width="var(--icon-stroke-width)" d="M14.608 12.563v5m2.5-2.5h-5">
+                                        </path>
+                                    </svg>
+                                    <svg class="checkmark-burst" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle class="ring" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="1.5"></circle>
+                                        <path class="tick" d="M9 12.75L11.25 15L15 9.75" stroke="currentColor"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </span>
+                                <span class="add-to-cart-text">Add</span>
+                            </button>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Yours Cruelly, ELVIRA</h3>
+                            <p class="product-price">$9.00 USD</p>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="card-gallery">
+                        <a href="#" class="product-link" onclick="return false;"
+                            aria-label="View CONNIE / The Hormone Monstress">
+                            <div class="slideshow-component">
+                                <div class="slideshow-slides" data-current-slide="0">
+                                    <div class="slideshow-slide" style="transform: translateX(0%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1615887023516-5ac4928c2a7f?w=600&h=800&fit=crop&q=80"
+                                                alt="CONNIE / The Hormone Monstress" loading="lazy">
+                                        </div>
+                                    </div>
+                                    <div class="slideshow-slide" style="transform: translateX(100%)">
+                                        <div class="product-media">
+                                            <img src="https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?w=600&h=800&fit=crop&q=80"
+                                                alt="CONNIE / The Hormone Monstress" loading="lazy">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slideshow-navigation">
+                                    <button class="slideshow-dot active" data-slide="0"
+                                        aria-label="Go to image 1"></button>
+                                    <button class="slideshow-dot" data-slide="1" aria-label="Go to image 2"></button>
+                                </div>
+                            </div>
+                            <div class="product-info-overlay">
+                                <h3 class="product-title">CONNIE / The Hormone Monstress</h3>
+                                <p class="product-price">$9.00 USD</p>
+                            </div>
+                        </a>
+                        <div class="quick-add">
+                            <button class="like-button" data-product-id="4"
+                                aria-label="Like CONNIE / The Hormone Monstress">
+                                <span class="like-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                                <span class="like-counter">0</span>
+                            </button>
+                            <button class="quick-add__button" data-product-id="4"
+                                data-product-title="CONNIE / The Hormone Monstress" data-product-price="9.00"
+                                aria-label="Add CONNIE / The Hormone Monstress to cart">
+                                <span class="add-to-cart-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="var(--icon-stroke-width)"
+                                            d="M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3">
+                                        </path>
+                                        <path stroke="currentColor" stroke-linecap="round"
+                                            stroke-width="var(--icon-stroke-width)" d="M14.608 12.563v5m2.5-2.5h-5">
+                                        </path>
+                                    </svg>
+                                    <svg class="checkmark-burst" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle class="ring" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="1.5"></circle>
+                                        <path class="tick" d="M9 12.75L11.25 15L15 9.75" stroke="currentColor"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </span>
+                                <span class="add-to-cart-text">Add</span>
+                            </button>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">CONNIE / The Hormone Monstress</h3>
+                            <p class="product-price">$9.00 USD</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script src="script.js"></script>
 </body>
 
 </html>
