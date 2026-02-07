@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free R Kelly - Product Details</title>
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="products.css">
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+  
+</head>
+
+<body>
+
+    <header>
+    
+        <section class="flex">
+    
+            <input type="checkbox" name="" id="toggler">
+            <label for="toggler" class="fas fa-bars"></label>
+    
+            <a href="Vyndetta.html" class="logo">vyndetta<span>.</span></a>
+    
+            <nav class="navbar">
+                <a href="#">Search</a> <!-- changed to # so it goes all the way up  -->
+                <a href="#Cart">Cart</a>
+            </nav>
+    
+    
+    
+        </section>
+    
+    </header>
+
+    <main class="product-container">
+
+        <div class="product-gallery">
+            <div class="main-image">
+                <img id="currentImage" src="images/Screenshot 2023-12-02 171525.png" alt="Main Product Image">
+            </div>
+            <div class="thumbnail-row">
+                <img src="images/Screenshot 2023-12-02 171525.png" onclick="changeImage(this)" class="active-thumb">
+                <img src="images/509.png" onclick="changeImage(this)">
+                <img src="https://via.placeholder.com/150" onclick="changeImage(this)">
+            </div>
+        </div>
+
+        <div class="product-details">
+            <span class="breadcrumbs">Home / T-Shirts / Free R Kelly</span>
+
+            <h1 class="title">Free R Kelly</h1>
+            <h2 class="price">$9.00 USD</h2>
+
+            <div class="description">
+                <p>High-quality graphic tee featuring exclusive artwork. Made from 100% heavy cotton for a vintage feel
+                    and long-lasting durability.</p>
+                <ul>
+                    <li>100% Cotton</li>
+                    <li>Unisex Fit</li>
+                    <li>Machine Wash Cold</li>
+                </ul>
+            </div>
+
+            <div class="options">
+                <label>Size:</label>
+                <div class="size-selector">
+                    <button class="size-btn">S</button>
+                    <button class="size-btn active">M</button>
+                    <button class="size-btn">L</button>
+                    <button class="size-btn">XL</button>
+                </div>
+            </div>
+
+            <div class="actions">
+                <input type="number" value="1" min="1" class="qty-input">
+                <button class="add-cart-btn">Add to Cart</button>
+            </div>
+
+            <p class="shipping-note">Free shipping on orders over $50.</p>
+        </div>
+
+
+
+    </main>
+
+                    <div id="music-btn" class="fas fa-music"></div>
+                    
+                    
+                    
+                    
+                    <!--music button ends -->
+                    
+                    <!-- Footer -->
+                    <footer>
+                        <div class="footer-content">
+                    
+                            <div class="footer-section">
+                                <h3>Support</h3>
+                                <ul>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Shipping Info</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer-section">
+                                <h3>Company</h3>
+                                <ul>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms of Service</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer-section">
+                                <h3>Stay Connected</h3>
+                                <p>Subscribe</p>
+                                <form class="newsletter-form">
+                                    <input type="email" placeholder="Your email">
+                                    <button type="submit">Join</button>
+                                </form>
+                                <div class="social-links">
+                                    <a href="#">Insta Link</a>
+                                    <a href="#">You Tube</a>
+                                    <a href="#">Sosa Media</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-bottom">
+                            <p>VYNDETTA. All rights reserved.</p>
+                        </div>
+                    </footer>
+
+<script>
+    // --- Image Gallery Logic ---
+    function changeImage(element) {
+        // Update main image source
+        document.getElementById('currentImage').src = element.src;
+
+        // Remove active class from all thumbs
+        let thumbs = document.querySelectorAll('.thumbnail-row img');
+        thumbs.forEach(thumb => thumb.classList.remove('active-thumb'));
+
+        // Add active class to clicked thumb
+        element.classList.add('active-thumb');
+    }
+
+    // --- Size Selector Logic (NEW) ---
+    // 1. Get all buttons with class "size-btn"
+    const sizeBtns = document.querySelectorAll('.size-btn');
+
+    // 2. Add a click event listener to EACH button
+    sizeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // A. Remove 'active' class from ALL size buttons
+            sizeBtns.forEach(b => b.classList.remove('active'));
+
+            // B. Add 'active' class to the ONE that was just clicked
+            btn.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+
+</html>

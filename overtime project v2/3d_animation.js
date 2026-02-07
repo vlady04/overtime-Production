@@ -2,92 +2,90 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // =========================================
-// CONFIGURATION
+// 1. CONFIGURATION
 // =========================================
 
-// --- POSITIONING ---
-const startGap = 1.4;
+// --- ALIGNMENT CONSTANTS ---
+// Set to 0 so the canvas covers the header
+const CANVAS_TOP_OFFSET_REM = 0;
 
-// --- SIZE SETTINGS ---
+// --- LOGO MODE SETTINGS ---
+const LOGO_SCALE = 0.30;
+// Adjust this to move it UP/DOWN relative to the logo
+// Positive = UP, Negative = DOWN
+const LOGO_Y_OFFSET = -3.1;
+
+// --- SCROLL TRIGGER ---
+// The pixel point where the blade detaches from the text and flies to the logo.
+let TRIGGER_POINT = 400;
+
+// --- MODEL SETTINGS ---
+const startGap = 1.4;
 const targetHeight = 0.5;
 const widthScale = 0.06;
 const depthScale = 1.0;
 
-// --- SHINY METAL LOOK ---
-// I made the red slightly lighter so it reflects more light
+// --- MATERIAL SETTINGS ---
 const objectColor = 0xAA2222;
-const materialRoughness = 0.08; // Mirror polish
-const materialMetalness = 0.9;  // Full Metal
+const materialRoughness = 0.08;
+const materialMetalness = 0.9;
 
-// --- SCROLL SPEED ---
+// --- ANIMATION SETTINGS ---
 const rotationSpeed = 0.005;
-
-// --- ALIGNMENT ---
 const startX = 0;
 const startY = 1.57;
 const startZ = 0;
 
 // =========================================
+// 2. SCENE SETUP
+// =========================================
 
 const container = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
 
-// This allows us to resize the WHOLE thing easily on mobile.
 const mainGroup = new THREE.Group();
 scene.add(mainGroup);
 
-// --- SMOOTH TRANSITION VARIABLES ---
-// We use these to store where we WANT the object to be
-let targetGroupScale = new THREE.Vector3(1, 1, 1);
-let targetGroupPosition = new THREE.Vector3(0, 0, 0);
+// Variables for smooth animations
+let targetRotation = 0;
+let currentRotation = 0;
 
-// scene.background = new THREE.Color(0x050505); // Very dark grey background
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-// to increase quality on mobile screens
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-// 1. EXPOSURE (BRIGHTNESS)
-// Higher number = Brighter Camera
 renderer.toneMappingExposure = 2.3;
-
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 container.appendChild(renderer.domElement);
 
-// --- CAMERA ---
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, -2, 18);
 
-// --- STATIC LIGHTS ---
+// =========================================
+// 3. LIGHTING
+// =========================================
 
-// 2. AMBIENT LIGHT (Base Brightness)
-// Increased to 3.0 so nothing is pitch black
 const ambientLight = new THREE.AmbientLight(0xffffff, 3.0);
 scene.add(ambientLight);
 
-// 3. MAIN SUN LIGHT
-// Increased to 8.0 (Very intense)
 const mainLight = new THREE.DirectionalLight(0xffffff, 8.0);
 mainLight.position.set(5, 10, 5);
 mainLight.castShadow = true;
 scene.add(mainLight);
 
-// --- MOVING LIGHTS (THE FLASH) ---
-// 4. POINT LIGHTS (Reflections)
-// Increased power to 400
 const movingLight1 = new THREE.PointLight(0xffffff, 400, 50);
 movingLight1.castShadow = true;
 scene.add(movingLight1);
 
-const movingLight2 = new THREE.PointLight(0xffaa00, 200, 50); // Orange/Gold highlight
+const movingLight2 = new THREE.PointLight(0xffaa00, 200, 50);
 scene.add(movingLight2);
 
+// =========================================
+// 4. LOAD MODEL
+// =========================================
 
-// --- MATERIAL ---
 const metalMaterial = new THREE.MeshStandardMaterial({
   color: objectColor,
   roughness: materialRoughness,
@@ -95,18 +93,15 @@ const metalMaterial = new THREE.MeshStandardMaterial({
   side: THREE.DoubleSide
 });
 
-// --- LOAD MODEL ---
 const loader = new GLTFLoader();
 
 loader.load('./Steel_Blade.glb', (gltf) => {
   const model = gltf.scene;
 
-  // Center
   const box = new THREE.Box3().setFromObject(model);
   const center = box.getCenter(new THREE.Vector3());
   model.position.sub(center);
 
-  // Scale
   const size = box.getSize(new THREE.Vector3());
   if (size.y === 0) return;
 
@@ -117,10 +112,7 @@ loader.load('./Steel_Blade.glb', (gltf) => {
     baseScale * depthScale
   );
 
-  // Rotation
   model.rotation.set(startX, startY, startZ);
-
-  // Material
   model.traverse((child) => {
     if (child.isMesh) {
       child.material = metalMaterial;
@@ -129,30 +121,231 @@ loader.load('./Steel_Blade.glb', (gltf) => {
     }
   });
 
-  // Create Stack
-  // --- ADD TO GROUP INSTEAD OF SCENE ---
-  mainGroup.add(model); //  first blade
+  mainGroup.add(model);
 
   const blade2 = model.clone();
   blade2.position.y = -startGap;
-  // mainGroup.add(blade2); // Add to group
+  // mainGroup.add(blade2); 
 
   const blade3 = model.clone();
   blade3.position.y = -startGap * 2;
-  // mainGroup.add(blade3); // Add to group
+  // mainGroup.add(blade3); 
 
-  console.log("High Brightness Blades Loaded.");
-
-  // Call resize once immediately to set the correct size for the current screen
-  resizeModel();
+  console.log("Model Loaded.");
 
 }, undefined, (error) => {
   console.error("ERROR LOADING GLB:", error);
 });
 
-// --- ANIMATION ---
-let targetRotation = 0;
-let currentRotation = 0;
+// =========================================
+// 5. RESIZE LOGIC
+// =========================================
+
+let lastWidth = window.innerWidth;
+
+function resizeModel(forceUpdate = false) {
+  // Measure Container (Fixes Safari 100svh bug)
+  const rect = container.getBoundingClientRect();
+  const currentWidth = rect.width;
+  const currentHeight = rect.height;
+
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+  if (!forceUpdate && isTouchDevice && window.innerWidth === lastWidth) {
+    return;
+  }
+  lastWidth = window.innerWidth;
+
+  camera.aspect = currentWidth / currentHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(currentWidth, currentHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+}
+
+resizeModel(true);
+window.addEventListener('resize', () => resizeModel(false));
+
+
+// =========================================
+// 6. TARGET SWITCHING LOGIC (Mobile Stability Fix + Custom Values)
+// =========================================
+
+// Track smoothing variables
+let smoothX = 0;
+let smoothY = 0;
+let smoothScaleX = 1;
+let smoothScaleY = 1;
+let smoothScaleZ = 1;
+
+// --- STABILITY VARIABLES ---
+let cachedWidth = 0;
+let cachedPixelsPerUnit = 0;
+let cachedScreenCenterY = 0;
+let cachedScreenCenterX = 0;
+
+function updateBladePosition() {
+  const homeSection = document.querySelector('.home');
+  const logoElement = document.querySelector('.logo');
+
+  if (!homeSection || !logoElement) return;
+
+  // --- A. STABLE MATH CALCULATION ---
+  // We check if the Width has changed (Rotation or Desktop Resize)
+  // If width is the same, we REUSE the old height math. 
+  // This ignores the vertical "jump" when the mobile toolbar hides.
+  const currentWidth = window.innerWidth;
+
+  if (Math.abs(currentWidth - cachedWidth) > 2 || cachedPixelsPerUnit === 0) {
+    // Recalculate ONLY if width changed
+    cachedWidth = currentWidth;
+
+    // Use the Container height (which uses svh) for stability, NOT window.innerHeight
+    const rect = container.getBoundingClientRect();
+    const stableHeight = rect.height;
+
+    const dist = camera.position.z - 0;
+    const vFOV = THREE.MathUtils.degToRad(camera.fov);
+    const visibleHeight_units = 2 * Math.tan(vFOV / 2) * dist;
+
+    cachedPixelsPerUnit = stableHeight / visibleHeight_units;
+    cachedScreenCenterY = stableHeight / 2;
+    cachedScreenCenterX = currentWidth / 2;
+  }
+
+  // Use the Locked/Cached values for math
+  const pixelsPerUnit = cachedPixelsPerUnit;
+  const screenCenterY = cachedScreenCenterY;
+  const screenCenterX = cachedScreenCenterX;
+
+
+  // --- B. DEFINE TARGETS ---
+  let activeTargetY = 0;
+  let activeTargetX = 0;
+
+  let targetWidth = widthScale;
+  let targetHeightScale = 1.0;
+  let targetDepth = depthScale;
+
+  let overallScale = 1.0;
+
+  // --- DYNAMIC TRIGGER ---
+  let effectiveTrigger = TRIGGER_POINT;
+  if (window.innerWidth < 600) effectiveTrigger = 300; // Your custom trigger
+
+  // Check Scroll Position
+  if (window.scrollY < effectiveTrigger) {
+    // =========================================
+    // MODE 1: HERO
+    // =========================================
+
+    const homeRect = homeSection.getBoundingClientRect();
+    const textCenterY = homeRect.top + (homeRect.height / 2);
+    const heroGapY = textCenterY - screenCenterY;
+
+    let heroOffset = 0;
+
+    if (window.innerWidth < 600) {
+      // [MOBILE HERO]
+      overallScale = 0.6;
+      heroOffset = -2.89;
+    } else if (window.innerWidth < 1000) {
+      // [TABLET HERO]
+      overallScale = 0.5;
+      heroOffset = -2.87;
+    } else {
+      // [DESKTOP HERO]
+      overallScale = 1.0;
+      heroOffset = -2.75;
+    }
+
+    activeTargetY = -(heroGapY / pixelsPerUnit) + heroOffset;
+    activeTargetX = 0;
+
+    targetWidth *= overallScale;
+    targetHeightScale *= overallScale;
+    targetDepth *= overallScale;
+
+  } else {
+    // =========================================
+    // MODE 2: LOGO
+    // =========================================
+
+    let currentLogoOffsetY = LOGO_Y_OFFSET;
+    let manualOffsetX = 0;
+
+    // --- MODE 2 MODEL SETTINGS ---
+    let m2_Width = 0.06;
+    let m2_Height = 1.0;
+    let m2_Depth = 1.0;
+    let m2_Overall = LOGO_SCALE;
+
+    if (window.innerWidth < 600) {
+      // [MOBILE LOGO]
+      m2_Overall = 0.17;
+      currentLogoOffsetY = -3.0;
+      manualOffsetX = -0.1;
+
+      m2_Width = 0.12;
+      m2_Height = 1.0;
+    }
+    else if (window.innerWidth < 1000) {
+      // [TABLET LOGO]
+      m2_Overall = 0.15;
+      currentLogoOffsetY = -3.1;
+      manualOffsetX = 0.15;
+
+      m2_Width = 0.10;
+      m2_Height = 1.0;
+    }
+    else {
+      // [DESKTOP LOGO]
+      m2_Overall = LOGO_SCALE;
+      currentLogoOffsetY = LOGO_Y_OFFSET;
+      manualOffsetX = 0.15;
+
+      m2_Width = 0.05;
+      m2_Height = 0.5;
+    }
+
+    // 1. CALCULATE Y
+    const logoRect = logoElement.getBoundingClientRect();
+    const logoTargetY = logoRect.bottom;
+    const logoGapY = logoTargetY - screenCenterY;
+    activeTargetY = -(logoGapY / pixelsPerUnit) + currentLogoOffsetY;
+
+    // 2. CALCULATE X
+    const logoTargetX = logoRect.left + (logoRect.width / 2);
+    const logoGapX = logoTargetX - screenCenterX;
+    activeTargetX = (logoGapX / pixelsPerUnit) + manualOffsetX;
+
+    // 3. SET DIMENSIONS
+    targetWidth = m2_Width * m2_Overall;
+    targetHeightScale = m2_Height * m2_Overall;
+    targetDepth = m2_Depth * m2_Overall;
+  }
+
+  // --- C. APPLY SMOOTHING ---
+  smoothY += (activeTargetY - smoothY) * 0.1;
+  smoothX += (activeTargetX - smoothX) * 0.1;
+
+  // Scale Smoothing
+  smoothScaleX += (targetWidth - smoothScaleX) * 0.1;
+  smoothScaleY += (targetHeightScale - smoothScaleY) * 0.1;
+  smoothScaleZ += (targetDepth - smoothScaleZ) * 0.1;
+
+  // --- D. UPDATE OBJECT ---
+ mainGroup.position.y = smoothY;
+ mainGroup.position.x = smoothX;
+
+  mainGroup.scale.set(
+    smoothScaleX / widthScale,
+    smoothScaleY,
+    smoothScaleZ / depthScale
+  );
+}
+// =========================================
+// 7. ANIMATION LOOP
+// =========================================
 
 window.addEventListener('scroll', () => {
   targetRotation = window.scrollY * rotationSpeed;
@@ -163,7 +356,7 @@ function animate() {
 
   const time = Date.now() * 0.002;
 
-  // Animate Lights
+  // Lights
   movingLight1.position.x = Math.sin(time) * 12;
   movingLight1.position.z = Math.cos(time) * 12;
   movingLight1.position.y = 4;
@@ -172,73 +365,25 @@ function animate() {
   movingLight2.position.y = Math.sin(time * 0.5) * 10;
   movingLight2.position.z = 8;
 
-  // Animate Camera/Objects
   camera.lookAt(0, -3, 0);
 
-  // Rotate the GROUP (Rotates all blades together)
+  // Rotation
   currentRotation += (targetRotation - currentRotation) * 0.05;
-
-  // Note: We apply rotation to the child objects inside the group 
-
   mainGroup.children.forEach(child => {
     child.rotation.x = startX + currentRotation;
   });
 
-  mainGroup.scale.lerp(targetGroupScale, 0.1);
-  mainGroup.position.lerp(targetGroupPosition, 0.1);
+  // Position & Scale Logic
+  updateBladePosition();
 
   renderer.render(scene, camera);
 }
 animate();
 
 // =========================================
-// RESIZE LOGIC (Responsive Size)
+// 8. PAGE TRANSITIONS
 // =========================================
-
-let lastWidth = 0;
-
-function resizeModel(forceUpdate = false) {
-  const currentWidth = window.innerWidth;
-
-  // CHECK: If width hasn't changed (and it's not a forced update), STOP.
-  // This prevents the "Jump" on mobile scrolling.
-  if (!forceUpdate && currentWidth === lastWidth && currentWidth < 900) {
-    return;
-  }
-
-  lastWidth = currentWidth;
-
-  // Standard Resize
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  if (currentWidth < 600) {
-    // MOBILE TARGETS
-    targetGroupScale.set(0.6, 0.6, 0.6);
-    targetGroupPosition.set(0, 0, 0);
-  } else if (currentWidth < 1000) {
-    // TABLET TARGETS
-    targetGroupScale.set(0.8, 0.8, 0.8);
-    targetGroupPosition.set(0, 0, 0);
-  } else {
-    // DESKTOP TARGETS
-    targetGroupScale.set(1, 1, 1);
-    targetGroupPosition.set(0, 0, 0);
-  }
-}
-
-// Attach listener
-window.addEventListener('resize', () => resizeModel(false));
-
-
-// =========================================
-// PART 2: LIGHT LEAK PAGE TRANSITION (FIXED)
-// =========================================
-
 function setupPageTransitions() {
-  // 1. Create the Overlay
   const overlay = document.createElement('div');
   overlay.style.position = 'fixed';
   overlay.style.top = '0';
@@ -255,7 +400,6 @@ function setupPageTransitions() {
 
   document.body.appendChild(overlay);
 
-  // 2. Reveal Page (Fade Out)
   requestAnimationFrame(() => {
     setTimeout(() => {
       overlay.style.opacity = '0';
@@ -263,11 +407,7 @@ function setupPageTransitions() {
     }, 50);
   });
 
-  // 3. Handle Clicks
   const links = document.querySelectorAll('a');
-
-  // Select the wrapper in HTML. 
-
   const contentWrapper = document.getElementById('page-wrapper') || document.body;
 
   links.forEach(link => {
@@ -279,26 +419,20 @@ function setupPageTransitions() {
         const isAnchor = targetUrl.includes('#');
         if (!isAnchor) e.preventDefault();
 
-        // A. Flash Overlay
         overlay.style.opacity = '1';
         overlay.style.backgroundPosition = '0% 0%';
-
-        // B. Warp ONLY the Content Wrapper (Header stays safe)
         contentWrapper.style.transition = 'transform 0.1s cubic-bezier(0.45, 0, 0.55, 1), filter 0.1s ease-in';
-        contentWrapper.style.transform = 'scale(1.05) scaleY(1.02)'; // Slightly reduced scale for cleaner look
+        contentWrapper.style.transform = 'scale(1.05) scaleY(1.02)';
         contentWrapper.style.filter = 'brightness(2) blur(3px)';
 
-        // C. Navigate or Reset
         if (!isAnchor) {
           setTimeout(() => {
             window.location.href = targetUrl;
           }, 150);
         } else {
-          // Reset effects if staying on the same page
           setTimeout(() => {
             overlay.style.opacity = '0';
             overlay.style.backgroundPosition = '100% 100%';
-
             contentWrapper.style.transform = 'none';
             contentWrapper.style.filter = 'none';
           }, 200);
@@ -308,38 +442,3 @@ function setupPageTransitions() {
   });
 }
 setupPageTransitions();
-
-// 3. Navigation Click Logic this part is disabled for now because it just target links.
-/* const links = document.querySelectorAll('a');
-
- links.forEach(link => {
-   link.addEventListener('click', (e) => {
-     const targetUrl = link.href;
-     const isInternal = targetUrl.includes(window.location.hostname);
-     const isAnchor = targetUrl.includes('#');
-
-     if (isInternal && !isAnchor) {
-       e.preventDefault();
-
-       // A. Trigger Light Leak (Flash + Background Move)
-       overlay.style.opacity = '1';
-       overlay.style.backgroundPosition = '0% 0%';
-
-       // B. Trigger Distortion (The "Warp" look)
-       // We use a larger scale and a vertical stretch to match the video
-       document.body.style.transition = 'transform 0.4s cubic-bezier(0.45, 0, 0.55, 1), filter 0.4s ease-in';
-       document.body.style.transform = 'scale(1.2) scaleY(1.1)';
-       document.body.style.filter = 'brightness(2) contrast(1.2) blur(4px)';
-
-       // C. Navigate
-       setTimeout(() => {
-         window.location.href = targetUrl;
-       }, 450);
-     }
-   });
- });
-}
-
-setupPageTransitions();
-
-*/

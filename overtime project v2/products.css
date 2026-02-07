@@ -1,0 +1,612 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.8rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Colors */
+  --color-primary: #e74c3c;
+  --color-secondary: #fff;
+  --color-text: #0a0a0a;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-success: #ff0000;
+
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+}
+
+#canvas-container {
+  position: fixed;
+  /* Keeps it locked to the screen while you scroll */
+  top: 18rem;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: 9999;
+  /* High number puts it ON TOP of everything */
+  pointer-events: none;
+  /* CRITICAL: Lets clicks pass through to the links below */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  text-transform: capitalize;
+  transition: all .2s linear;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0a0a0a;
+  color: #fff;
+}
+
+section {
+  padding: 2rem 9%;
+}
+
+.heading {
+  text-align: center;
+  font-size: 4rem;
+  color: #fff;
+  padding: 1rem;
+  margin: 2rem 0;
+  text-transform: uppercase;
+}
+/* =========================================
+   Product Details Page Layout
+   ========================================= */
+
+/* Adjust container to sit below your fixed header */
+.product-container {
+  width: 100%;
+  margin: 8rem auto 5rem;
+  /* Top margin clears the fixed header */
+  padding: 12rem 9%;
+  /* Matches your section padding */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  
+  background: radial-gradient(circle at center, rgba(231, 76, 60, 0.1) 0%, transparent 70%);
+}
+
+/* Header Styles */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.95);
+  padding: 2rem 9%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  box-shadow: 0 .5rem 1rem rgba(231, 76, 60, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+header .flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+header #toggler {
+  display: none;
+}
+
+header .fa-bars {
+  font-size: 3rem;
+  color: #f7f4f4;
+  border-radius: .5rem;
+  padding: .5rem 1.5rem;
+  cursor: pointer;
+  border: .1rem solid rgba(0, 0, 0, .3);
+  display: none;
+}
+
+header .logo {
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: lowercase;
+}
+
+header .logo span {
+  color: #9a2a1d;
+}
+
+header .navbar a {
+  font-size: 1.7rem;
+  margin-left: 2rem;
+  color: #fff;
+  text-decoration: none;
+  transition: color .3s;
+}
+
+header .navbar a:hover {
+  color: #9a2a1d
+}
+
+header input,
+header label {
+  display: none;
+}
+
+/* =========================================
+   Left Column: Gallery
+   ========================================= */
+.product-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.main-image {
+  width: 100%;
+  /* Create a square-ish aspect ratio or fixed height */
+  height: 50rem;
+  background-color: #1a1a1a;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5);
+}
+
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Keeps whole image visible */
+}
+
+.thumbnail-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.thumbnail-row img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: #1a1a1a;
+}
+
+/* Hover and Active state uses your Primary Red */
+.thumbnail-row img:hover,
+.thumbnail-row img.active-thumb {
+  opacity: 1;
+  border-color: #e74c3c;
+  transform: translateY(-3px);
+}
+
+/* =========================================
+   Right Column: Details
+   ========================================= */
+.product-details {
+  padding-top: 1rem;
+}
+
+.breadcrumbs {
+  color: #888;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.title {
+  font-size: 4rem;
+  margin: 1rem 0;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.price {
+  font-size: 3rem;
+  color: #e74c3c;
+  /* Vyndetta Red */
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-shadow: 0 0 1rem rgba(231, 76, 60, 0.3);
+}
+
+.description {
+  font-size: 1.6rem;
+  /* Standard readable text size */
+  line-height: 1.8;
+  color: #ccc;
+  margin-bottom: 3rem;
+  text-transform: none;
+  /* easier reading for description */
+}
+
+.description ul {
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+
+.description li {
+  margin-bottom: 0.5rem;
+}
+
+/* =========================================
+   Options (Size Selector)
+   ========================================= */
+.options {
+  margin-bottom: 3rem;
+}
+
+.options label {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.size-selector {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.size-btn {
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.size-btn:hover {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+/* Active Size Button - Filled Red */
+.size-btn.active {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+  color: #fff;
+  box-shadow: 0 0 1rem rgba(231, 76, 60, 0.4);
+}
+
+/* =========================================
+   Actions (Add to Cart)
+   ========================================= */
+.actions {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.qty-input {
+  width: 7rem;
+  padding: 1.2rem;
+  font-size: 1.8rem;
+  text-align: center;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.qty-input:focus {
+  outline: none;
+  border-color: #e74c3c;
+}
+
+.add-cart-btn {
+  flex: 1;
+  background-color: #e74c3c;
+  /* Primary Red */
+  color: white;
+  border: none;
+  padding: 1.5rem 3rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0.5rem 1rem rgba(231, 76, 60, 0.2);
+}
+
+.add-cart-btn:hover {
+  background-color: #fff;
+  color: #e74c3c;
+  transform: translateY(-2px);
+  box-shadow: 0 1rem 2rem rgba(231, 76, 60, 0.3);
+}
+
+.shipping-note {
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  color: #888;
+  font-style: italic;
+  text-transform: none;
+}
+
+     /* Footer */
+     footer {
+       background: var(--primary-color);
+       color: white;
+       padding: 60px 5% 30px;
+     }
+  
+     .footer-content {
+       max-width: 1400px;
+       margin: 0 auto;
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+       gap: 40px;
+       margin-bottom: 40px;
+     }
+  
+     .footer-section h3 {
+       margin-bottom: 20px;
+       font-size: 18px;
+     }
+  
+     .footer-section ul {
+       list-style: none;
+     }
+  
+     .footer-section ul li {
+       margin-bottom: 10px;
+     }
+  
+     .footer-section a {
+       color: rgba(255, 255, 255, 0.8);
+       text-decoration: none;
+       transition: color 0.3s;
+     }
+  
+     .footer-section a:hover {
+       color: white;
+     }
+  
+     .social-links {
+       display: flex;
+       gap: 15px;
+       margin-top: 15px;
+     }
+  
+     .social-links a {
+       font-size: 24px;
+     }
+  
+     .newsletter-form {
+       display: flex;
+       margin-top: 15px;
+     }
+  
+     .newsletter-form input {
+       flex: 1;
+       padding: 12px;
+       border: none;
+       border-radius: 4px 0 0 4px;
+     }
+  
+     .newsletter-form button {
+       padding: 12px 20px;
+       background: white;
+       color: var(--primary-color);
+       border: none;
+       border-radius: 0 4px 4px 0;
+       cursor: pointer;
+       font-weight: 600;
+     }
+  
+     .footer-bottom {
+       text-align: center;
+       padding-top: 30px;
+       border-top: 1px solid rgba(255, 255, 255, 0.1);
+       color: rgba(255, 255, 255, 0.6);
+     }
+
+/* =========================================
+   Responsiveness
+   ========================================= */
+@media (max-width: 991px) {
+  .product-container {
+    margin-top: 10rem;
+    gap: 3rem;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    grid-template-columns: 1fr;
+    /* Stack vertically */
+    margin-top: 8rem;
+  }
+
+  .main-image {
+    height: 40rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    /* Stack input and button on small screens */
+    align-items: stretch;
+  }
+
+  .qty-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  header input:checked~.navbar {
+    left: 0;
+  }
+
+  header .fa-bars {
+    display: block;
+  }
+
+  header input:checked~label::before {
+    content: '\f00d';
+  }
+
+  header label {
+    display: block;
+    font-size: 2.5rem;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  header .navbar {
+    position: fixed;
+    top: 8rem;
+    left: -120%;
+    background: rgba(0, 0, 0, 0.98);
+    width: 100%;
+    height: calc(100vh - 8rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 5rem;
+    transition: left .3s;
+  }
+
+  header .navbar a {
+    margin: 1.5rem 0;
+    font-size: 2.5rem;
+    display: block;
+  }
+
+  .home .content h3 {
+    font-size: 5.5rem;
+    margin-bottom: -20px;
+
+
+  }
+
+  .products .box-container {
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  }
+
+  .home {
+    min-height: 78vh;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+
+  .heading {
+    font-size: 3rem;
+  }
+
+  .home .content h3 {
+    font-size: 5.5rem;
+
+  }
+}
+
+/* Music Button Styles */
+/* FLOATING MUSIC BUTTON */
+#music-btn {
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  z-index: 10000;
+  /* Stays on top of everything */
+
+  height: 5rem;
+  width: 5rem;
+  line-height: 5rem;
+  text-align: center;
+
+  background: #e74c3c;
+  /* Red background */
+  color: #fff;
+  border-radius: 50%;
+  /* Makes it a circle */
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  transition: all 0.3s linear;
+}
+
+#music-btn:hover {
+  background: #fff;
+  color: #e74c3c;
+  transform: scale(1.1);
+}
+
+/* PULSE ANIMATION (When Playing) */
+.playing {
+  animation: pulse 1.5s infinite;
+  background: #000000 !important;
+  /* Optional: Green when playing */
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 3, 3, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 15px rgba(39, 174, 96, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+  }
+}
